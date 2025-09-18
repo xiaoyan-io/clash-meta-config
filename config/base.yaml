@@ -1,0 +1,54 @@
+# ================= 基础设置 =================
+port: 7890
+socks-port: 7891
+redir-port: 7892
+tproxy-port: 7895
+mixed-port: 7893
+
+allow-lan: true
+mode: rule
+log-level: info
+external-controller: 0.0.0.0:9090
+secret: YwxHtojj
+bind-address: "*"
+external-ui: "/usr/share/openclash/ui"
+external-ui-name: metacubexd
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+  tracing: false
+  statistics: true
+
+# ================= DNS 设置 =================
+dns:
+  enable: true
+  ipv6: false
+  listen: 0.0.0.0:7874
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  nameserver:
+    - 1.1.1.1
+    - 8.8.8.8
+  fallback:
+    - tls://1.1.1.1:853
+    - tls://8.8.4.4:853
+
+# ================= 占位符（脚本会自动填充） =================
+proxies: []
+
+proxy-groups: []
+
+# ================= 基础规则 =================
+rules:
+  # 本地直连
+  - GEOIP,LAN,DIRECT
+  - GEOIP,CN,DIRECT
+  - DOMAIN,localhost,DIRECT
+  - DOMAIN,local,DIRECT
+  - IP-CIDR,127.0.0.0/8,DIRECT
+  - IP-CIDR,192.168.0.0/16,DIRECT
+  - IP-CIDR,10.0.0.0/8,DIRECT
+
+  # 默认走策略选择
+  - MATCH,🛡️ 策略选择
