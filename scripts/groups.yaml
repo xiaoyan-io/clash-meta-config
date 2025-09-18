@@ -5,33 +5,42 @@ proxy-groups:
     url: http://www.gstatic.com/generate_204
     interval: 600
     tolerance: 150
-    use:
-      - all
+    proxies:
+      - US-VMess
+      - US-TUIC
+      - US-Hysteria2
 
   - name: "📱 社交媒体"
     type: select
-    use:
-      - all
+    proxies:
+      - 🚀 自动选择
+      - US-VMess
+      - US-TUIC
 
   - name: "🎥 视频媒体"
     type: select
-    use:
-      - all
+    proxies:
+      - 🚀 自动选择
+      - US-Hysteria2
 
   - name: "🎮 游戏加速"
     type: select
-    use:
-      - all
+    proxies:
+      - US-TUIC
+      - US-VMess
 
   - name: "🎬 奈飞解锁"
     type: select
-    use:
-      - all
+    proxies:
+      - 🚀 自动选择
+      - US-Hysteria2
 
   - name: "🤖 ChatGPT"
     type: select
-    use:
-      - all
+    proxies:
+      - 🚀 自动选择
+      - US-VMess
+      - US-Hysteria2
 
   - name: "🛑 广告拦截"
     type: select
