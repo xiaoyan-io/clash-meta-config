@@ -1,0 +1,32 @@
+name: Build ClashMeta Config
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # 每天 00:00 UTC
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install deps
+        run: pip install pyyaml requests
+
+      - name: Generate config
+        run: python scripts/gen_config.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add clash-meta-config.yaml
+          git commit -m "Auto update $(date +%Y-%m-%d)"
+          git push
