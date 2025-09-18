@@ -1,0 +1,27 @@
+# ================= 规则设置 =================
+rules:
+  # 广告拦截
+  - DOMAIN-SUFFIX,ads.google.com,🛑 广告拦截
+  - DOMAIN-SUFFIX,doubleclick.net,🛑 广告拦截
+  - DOMAIN-SUFFIX,googlesyndication.com,🛑 广告拦截
+
+  # 本地直连
+  - GEOIP,LAN,DIRECT
+  - GEOIP,CN,DIRECT
+  - DOMAIN,localhost,DIRECT
+  - DOMAIN,local,DIRECT
+  - IP-CIDR,127.0.0.0/8,DIRECT
+  - IP-CIDR,192.168.0.0/16,DIRECT
+  - IP-CIDR,10.0.0.0/8,DIRECT
+
+  # Netflix 专用
+  - DOMAIN-SUFFIX,netflix.com,🎬 奈飞解锁
+  - DOMAIN-SUFFIX,nflxvideo.net,🎬 奈飞解锁
+
+  # ChatGPT 专用
+  - DOMAIN-SUFFIX,openai.com,🤖 ChatGPT
+  - DOMAIN-SUFFIX,chatgpt.com,🤖 ChatGPT
+  - DOMAIN-SUFFIX,oaiusercontent.com,🤖 ChatGPT
+
+  # 默认
+  - MATCH,🛡️ 策略选择
