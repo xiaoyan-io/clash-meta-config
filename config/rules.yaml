@@ -1,0 +1,18 @@
+rules:
+  - GEOIP,LAN,DIRECT
+  - GEOIP,CN,DIRECT
+  - DOMAIN-KEYWORD,synology,DIRECT
+  - DOMAIN,local,DIRECT
+  - DOMAIN,localhost,DIRECT
+  - IP-CIDR,127.0.0.0/8,DIRECT
+  - IP-CIDR,192.168.0.0/16,DIRECT
+  - IP-CIDR,10.0.0.0/8,DIRECT
+  - GEOSITE,category-ads-all,🛑 广告拦截
+  - GEOSITE,cn,DIRECT
+  - GEOSITE,category-games@cn,DIRECT
+  - GEOSITE,twitter,📱 社交媒体
+  - GEOSITE,youtube,🎥 视频媒体
+  - GEOSITE,netflix,🎬 奈飞解锁
+  - GEOSITE,telegram,📱 社交媒体
+  - GEOSITE,geolocation-!cn,⚡ 全局代理
+  - MATCH,🛡️ 策略选择
