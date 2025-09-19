@@ -1,15 +1,16 @@
-# ================= 基础设置 =================
+# ================= 主参数 & geo分段 & DNS =================
 port: 7890
 socks-port: 7891
 redir-port: 7892
 tproxy-port: 7895
 mixed-port: 7893
-
 allow-lan: true
 mode: rule
 log-level: info
+unified-delay: true
+global-client-fingerprint: chrome
 external-controller: 0.0.0.0:9090
-secret: YwxHtojj
+secret: "mysecret"
 bind-address: "*"
 external-ui: "/usr/share/openclash/ui"
 external-ui-name: metacubexd
@@ -17,38 +18,35 @@ external-ui-name: metacubexd
 profile:
   store-selected: true
   store-fake-ip: true
-  tracing: false
   statistics: true
 
-# ================= DNS 设置 =================
+geodata-mode: true
+geo-auto-update: true
+geodata-loader: memconservative
+geox-url:
+  geoip: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
+  asn: "https://testingcf.jsdelivr.net/gh/xishang0128/geoip@release/GeoLite2-ASN.mmdb"
+
 dns:
   enable: true
-  ipv6: false
+  ipv6: true
   listen: 0.0.0.0:7874
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
-  nameserver:
-    - 1.1.1.1
+  prefer-h3: true
+  default-nameserver:
+    - 223.5.5.5
     - 8.8.8.8
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
   fallback:
-    - tls://1.1.1.1:853
-    - tls://8.8.4.4:853
-
-# ================= 占位符（脚本会自动填充） =================
-proxies: []
-
-proxy-groups: []
-
-# ================= 基础规则 =================
-rules:
-  # 本地直连
-  - GEOIP,LAN,DIRECT
-  - GEOIP,CN,DIRECT
-  - DOMAIN,localhost,DIRECT
-  - DOMAIN,local,DIRECT
-  - IP-CIDR,127.0.0.0/8,DIRECT
-  - IP-CIDR,192.168.0.0/16,DIRECT
-  - IP-CIDR,10.0.0.0/8,DIRECT
-
-  # 默认走策略选择
-  - MATCH,🛡️ 策略选择
+    - https://1.0.0.1/dns-query
+    - tls://dns.google
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+      - 240.0.0.0/4
