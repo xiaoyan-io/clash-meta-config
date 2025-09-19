@@ -1,0 +1,64 @@
+proxy-groups:
+  - name: "🚀 自动选择"
+    type: fallback
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 100
+    use:
+      - all
+  - name: "📱 社交媒体"
+    type: fallback
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 100
+    use:
+      - all
+  - name: "🎥 视频媒体"
+    type: fallback
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 100
+    use:
+      - all
+  - name: "🎮 游戏加速"
+    type: fallback
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 80
+    use:
+      - all
+  - name: "🎬 奈飞解锁"
+    type: fallback
+    url: http://www.netflix.com/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - all
+  - name: "🤖 ChatGPT"
+    type: fallback
+    url: http://chat.openai.com
+    interval: 300
+    tolerance: 80
+    use:
+      - all
+  - name: "🛑 广告拦截"
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+  - name: "⚡ 全局代理"
+    type: select
+    proxies:
+      - "🚀 自动选择"
+      - "📱 社交媒体"
+      - "🎥 视频媒体"
+      - "🎮 游戏加速"
+      - "🎬 奈飞解锁"
+      - "🤖 ChatGPT"
+      - "🛑 广告拦截"
+      - DIRECT
+  - name: "🛡️ 策略选择"
+    type: select
+    proxies:
+      - "⚡ 全局代理"
+      - "🚀 自动选择"
