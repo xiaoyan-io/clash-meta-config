@@ -10,7 +10,7 @@ log-level: info
 unified-delay: true
 global-client-fingerprint: chrome
 external-controller: 0.0.0.0:9090
-secret: "mysecret"
+secret: "*"
 bind-address: "*"
 external-ui: "/usr/share/openclash/ui"
 external-ui-name: metacubexd
