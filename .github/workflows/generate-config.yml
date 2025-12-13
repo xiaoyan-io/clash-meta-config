@@ -1,0 +1,65 @@
+name: Generate ClashMeta Config
+
+permissions:
+  contents: write
+
+on:
+  schedule:
+    - cron: "15 0 * * *"  # 每天 00:15 UTC
+  workflow_dispatch:
+
+concurrency:
+  group: clash-meta-config-generate
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml requests
+
+      - name: Generate config
+        run: python update_meta_config.py
+
+      - name: Validate output
+        run: |
+          python - <<'PY'
+          import yaml, pathlib
+          out = pathlib.Path("clash-meta-config.yaml")
+          if not out.exists():
+            raise SystemExit("clash-meta-config.yaml not found")
+          data = yaml.safe_load(out.read_text(encoding="utf-8"))
+          if not data.get("proxies"):
+            raise SystemExit("No proxies found in generated config")
+          if not data.get("proxy-groups"):
+            raise SystemExit("No proxy-groups found in generated config")
+          if not data.get("rules"):
+            raise SystemExit("No rules found in generated config")
+          PY
+
+      - name: Commit and push
+        env:
+          TZ: Asia/Shanghai
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add clash-meta-config.yaml history/
+          git commit -m "chore: auto update config $(date +'%Y-%m-%d %H:%M %Z')"
+          git push
